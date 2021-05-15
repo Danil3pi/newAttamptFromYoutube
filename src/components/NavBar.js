@@ -1,7 +1,8 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-
 import { Link } from 'react-router-dom';
+import {CgMenuGridR} from 'react-icons/cg'
+
 import Button from './Button';
 
 const Nav = styled.nav`
@@ -37,23 +38,44 @@ const Logo = styled(Link)`
 
     font-style: italic;
 `;
-const MenuBar = styled.i``;
+const MenuBar = styled(CgMenuGridR)`
+    display: none;
+
+    @media screen and (max-width: 768px){
+        display: block;
+        color: #fff;
+        font-size: 2.5rem;
+
+        cursor: pointer;
+
+        transform: translateY(-15%)
+    }
+`;
 
 const NavMenu = styled.div`
     display: flex;
     align-items: center;
 
     margin-right: -48px;
+
+    @media screen and (max-width: 768px){
+        display: none;
+    }
 `;
 
 const NavLink = styled(Link)`
     ${ForLink}; 
 `;
 
-const NavBtn = styled.div`
+const NavBtn = styled.div`// *! Он сделал эту обертку для того, чтобы можно было 
+// *! взаимодействовать в этом компоненте с исчезновением кнопки
     display: flex;
     align-items: center;
     margin-right: 24px;
+
+    @media screen and (max-width: 768px){
+        display: none;
+    }
 `;
 
 const NavBar = ({ navData }) => {
