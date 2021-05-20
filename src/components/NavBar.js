@@ -7,7 +7,6 @@ import Button from './Button';
 
 const Nav = styled.nav`
     height: 60px;
-    background-color: red;  
 
     display: flex;
     justify-content: space-between;
@@ -48,7 +47,10 @@ const MenuBar = styled(CgMenuGridR)`
 
         cursor: pointer;
 
-        transform: translateY(-15%)
+        //transform: translateY(-15%) //* But he did this by position: absolute;
+        position: absolute;
+        top: 1.2rem;
+        right: 1.5rem;
     }
 `;
 
@@ -78,11 +80,11 @@ const NavBtn = styled.div`// *! Он сделал эту обертку для �
     }
 `;
 
-const NavBar = ({ navData }) => {
+const NavBar = ({ navData, toggle }) => {
     return (
         <Nav>
             <Logo>EXC</Logo>
-            <MenuBar />
+            <MenuBar onClick={toggle}/>
             <NavMenu>
                 {navData.map((item, index) => (
                     <NavLink to={item.link} key={index}>
@@ -91,7 +93,7 @@ const NavBar = ({ navData }) => {
                 ))}
             </NavMenu>
             <NavBtn>
-                <Button primary={false} big={false} to="/contact">Contact Us</Button>
+                <Button primary='true' to="/contact">Contact Us</Button>
             </NavBtn>
         </Nav>
     )

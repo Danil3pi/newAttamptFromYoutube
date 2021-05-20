@@ -13,14 +13,15 @@ const Button = styled(Link)`
     text-decoration: none;
     font-size: ${({big}) => (big ? '20px' : '14px')};
 
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
+    display: flex; // ! В кнопке будут располагаться другие элементы, поэтому нужно Делать флексом
+    justify-content: center; //! Ведь для чего еще флекс использовать как не для внутреннего позиционирования
+    align-items: center;
 
     transition: .3s;
     &:hover{
         transform: translateY(-2px)
     }
 `
+
 
 export default Button;
