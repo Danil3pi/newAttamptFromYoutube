@@ -77,7 +77,7 @@ const DropdownMenuLink = styled(Link)`
 
 const BtnWrap = styled.div``
 
-const Dropdown = ({isOpened, toggle}) => {
+const Dropdown = ({navData, isOpened, toggle}) => {
     return (
         <DropdownContainer isOpened={isOpened}>
             <Icon>
@@ -87,7 +87,7 @@ const Dropdown = ({isOpened, toggle}) => {
             <DropdownWrapper>
                 <DropdownMenu>
                     {navData.map((item, index) => (
-                        <DropdownMenuLink to={item.link}>{item.title}</DropdownMenuLink>
+                        <DropdownMenuLink to={item.link} key={index}>{item.title}</DropdownMenuLink>
                     ))}
                 </DropdownMenu>
 

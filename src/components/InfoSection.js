@@ -55,6 +55,16 @@ const ColumnRight = styled.div`
 
         margin: 0 auto;
     }
+
+    @media screen and (max-width: 768px){
+        img{
+        width: 90%;
+        height: 90%;
+        object-fit: cover;
+
+        margin: 0 auto;
+    }
+    }
 `;
 
 const InfoSection = (

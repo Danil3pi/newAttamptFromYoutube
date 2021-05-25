@@ -1,7 +1,8 @@
-const navData = [
-    {title: 'About', link: '/about'},
-    {title: 'Homes', link: '/homes'},
-    {title: 'Rentals', link: '/rentals'},
-];
 
-export default navData;
+//     const navData = [
+//         {title: 'About', link: '/about', click: () => alert('Click')},
+//         {title: 'Homes', link: '/homes', click: () => alert('Click')},
+//         {title: 'Game', link: '/game', click: () => alert('Click')},
+//     ];
+
+// export default navData;

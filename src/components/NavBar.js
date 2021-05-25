@@ -87,7 +87,7 @@ const NavBar = ({ navData, toggle }) => {
             <MenuBar onClick={toggle}/>
             <NavMenu>
                 {navData.map((item, index) => (
-                    <NavLink to={item.link} key={index}>
+                    <NavLink to={item.link} key={index} onClick={item.click}>
                         {item.title}
                     </NavLink>
                 ))}
