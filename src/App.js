@@ -14,6 +14,7 @@ import { sectionDataOne, sectionDataTwo } from './data/SectionData';
 // import {Route} from 'react-router-dom';
 
 import SnakeBoard from './components/MyGame/ShakeBoard.js';
+import SnakeGame from './components/Snake/SnakeGame';
 
 function App() {
 
@@ -21,11 +22,15 @@ function App() {
 
   //Ќужно смотреть открытали игра или нет, а уже потом 
   // смотреть ќтображать весь сайт или нет
-  const [gameMode, setGameMode] = useState(false);
+  // const [gameMode, setGameMode] = useState(false);
 
-  const toogleGame = () => {
-    setGameMode(!gameMode);
-  }
+  // const toogleGame = () => {
+  //   setGameMode(!gameMode);
+  // }
+
+  const [windowIsOpened, setWindowIsOpened] = useState(false);
+
+  const toggleModelWindow = () => {setWindowIsOpened(!windowIsOpened)};
 
   const toggle = () => (
     setIsOpened(!isOpened)
@@ -34,18 +39,19 @@ function App() {
   const navData = [
     { title: 'About', link: '/about', click: () => alert('Click') },
     { title: 'Homes', link: '/homes', click: () => alert('Click') },
-    { title: 'Game', link: '/game', click: toogleGame },
+    { title: 'Game', link: '/game', click: toggleModelWindow },
   ]
 
   return (
     <>
-      <GlobalStyleForAverything />
+      <GlobalStyleForAverything isGame={windowIsOpened}/>
       <NavBar navData={navData} toggle={toggle} />
       <Dropdown isOpened={isOpened} toggle={toggle} navData={navData} />
       <Hero slides={sliderData} />
       <InsoSection {...sectionDataOne} />
       <InsoSection {...sectionDataTwo} />
-      <SnakeBoard isGame={gameMode} toogleGame={toogleGame}/>
+      {/* <SnakeBoard isGame={gameMode} toogleGame={toogleGame}/> */}
+      <SnakeGame windowIsOpened={windowIsOpened} toggleModelWindow={toggleModelWindow}/>
     </>
   );
   /*if(!gameMode) {

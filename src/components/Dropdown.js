@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Children } from 'react'
 import styled from 'styled-components'
 
 
@@ -6,6 +6,7 @@ import { FaTimes } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import navData from '../data/NavData';
 import Button from './Button';
+import { CgSmileNone } from 'react-icons/cg';
 
 const DropdownContainer = styled.div`
     position: fixed;
@@ -55,7 +56,7 @@ const DropdownMenu = styled.div`
     @media screen and (max-width: 480px) {
         grid-template-rows: repeat(4, 60px);
     }
-`;
+`
 
 const DropdownMenuLink = styled(Link)`
     color: #fff;
@@ -91,9 +92,6 @@ const Dropdown = ({navData, isOpened, toggle}) => {
                     ))}
                 </DropdownMenu>
 
-                <BtnWrap>
-                    <Button primary='true' big="true">Contant US</Button>
-                </BtnWrap>
             </DropdownWrapper>
 
         </DropdownContainer>

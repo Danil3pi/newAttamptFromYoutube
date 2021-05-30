@@ -6,6 +6,8 @@ const GlobalStyleForAverything = createGlobalStyle`
         margin: 0;
         box-sizing: border-box; 
         font-family: 'Montserrat', sans-serif;
+        
+        overflow: ${({isGame}) => (isGame ? 'hidden' : 'visible')}; //Выкрючить скрол
     }
 `; 
 

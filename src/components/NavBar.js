@@ -19,6 +19,7 @@ const Nav = styled.nav`
 
     padding: 1rem 2rem;
 
+    background-color: #CD853F;
 `;
 
 const ForLink = css` // *For castoms styles
@@ -49,8 +50,8 @@ const MenuBar = styled(CgMenuGridR)`
 
         //transform: translateY(-15%) //* But he did this by position: absolute;
         position: absolute;
-        top: 1.2rem;
-        right: 1.5rem;
+        top: 0.5rem;
+        right: 0.5rem;
     }
 `;
 
