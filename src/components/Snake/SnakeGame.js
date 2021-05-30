@@ -18,7 +18,7 @@ const Canvas = () => {
 
     const [snake, setSnake] = useState(SNAKE_START);
     const [apple, setApple] = useState(APPLE_START);
-    const [dir, setDir] = useState([0, -1]);
+    const [dir, setDir] = useState({ xSpeed: 0, ySpeed: -1 });
     const [speed, setSpeed] = useState(null);
     const [gameOver, setGameOver] = useState(false);
     let [count, setCount] = useState(0);
@@ -26,8 +26,8 @@ const Canvas = () => {
     function useInterval(callback, delay) {
         const savedCallback = useRef();
         /*
-        !? 1. Для чего нужено useRef() 
-        !? 2. Зачем нужен второй useEffect
+        !? 1. пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ useRef() 
+        !? 2. пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ useEffect
         */
 
         // Remember the latest callback.
@@ -58,8 +58,14 @@ const Canvas = () => {
     const moveSnake = ({ keyCode }) =>
         keyCode >= 37 && keyCode <= 40 && setDir(DIRECTIONS[keyCode]);
 
-    const createApple = () =>
-        apple.map((_a, i) => Math.floor(Math.random() * (CANVAS_SIZE[i] / SCALE)));
+    // const createApple = () =>
+    //     apple.map((_a, i) => Math.floor(Math.random() * (CANVAS_SIZE[i] / SCALE)));
+
+
+
+    function createApple() {
+        return { x: Math.floor(Math.random() * (CANVAS_SIZE[1] / SCALE)), y: Math.floor(Math.random() * (CANVAS_SIZE[1] / SCALE)) }
+    }
 
     const checkCollision = (piece, snk = snake) => {
         // if (
@@ -68,15 +74,16 @@ const Canvas = () => {
         //     piece[1] * SCALE >= CANVAS_SIZE[1] ||
         //     piece[1] < 0
         // ) { return true; }
+debugger;
 
         for (const segment of snk) {
-            if (piece[0] === segment[0] && piece[1] === segment[1]) return true;
+            if (piece.x === segment.x && piece.y === segment.y) return true;
         }
         return false;
     };
 
     const checkAppleCollision = newSnake => {
-        if (newSnake[0][0] === apple[0] && newSnake[0][1] === apple[1]) {
+        if (newSnake[0].x === apple.x && newSnake[0].y === apple.y) {
             let newApple = createApple();
             while (checkCollision(newApple, newSnake)) {
                 newApple = createApple();
@@ -91,22 +98,25 @@ const Canvas = () => {
     };
 
     const gameLoop = () => {
-        const snakeCopy = JSON.parse(JSON.stringify(snake));
+        //const snakeCopy = JSON.parse(JSON.stringify(snake));
+        //const snakeCopy = Object.assign({}, snake);
+        //debugger;
+        const snakeCopy = snake.map(piece => piece);
 
-        console.log(snakeCopy[0][0], snakeCopy[0][1]);
-        if (snakeCopy[0][0] < 0) {
-            snakeCopy[0][0] = 30;
-        }else if (snakeCopy[0][1] < 0) {
-            snakeCopy[0][1] = 30;
+        console.log(snakeCopy[0].x, snakeCopy[0].y);
+        if (snakeCopy[0].x < 0) {
+            snakeCopy[0].x = 30;
+        } else if (snakeCopy[0].y < 0) {
+            snakeCopy[0].y = 30;
         }
 
         //If a sanke is object and a dir is object
-        //const newSnakeHead = [(snakeCopy[0].x + dir.xSpeed) % 30, (snakeCopy[0].y + dir.ySpeed) % 30];
-        const newSnakeHead = [(snakeCopy[0][0] + dir[0]) % 30, (snakeCopy[0][1] + dir[1]) % 30];
+        const newSnakeHead = { x: ((snakeCopy[0].x + dir.xSpeed) % 30), y: ((snakeCopy[0].y + dir.ySpeed) % 30) };
+        //const newSnakeHead = [(snakeCopy[0][0] + dir[0]) % 30, (snakeCopy[0][1] + dir[1]) % 30];
 
-        snakeCopy.unshift(newSnakeHead);// Добавляем элемент в начало
+        snakeCopy.unshift(newSnakeHead);// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         if (checkCollision(newSnakeHead)) endGame();
-        if (!checkAppleCollision(snakeCopy)) snakeCopy.pop();//Извлекаем элемент из конца
+        if (!checkAppleCollision(snakeCopy)) snakeCopy.pop();//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 
         setSnake(snakeCopy);
     };
@@ -114,7 +124,7 @@ const Canvas = () => {
     const startGame = () => {
         setSnake(SNAKE_START);
         setApple(APPLE_START);
-        setDir([0, -1]);
+        setDir({ xSpeed: 0, ySpeed: -1 });
         setSpeed(SPEED);
         setGameOver(false);
     };
@@ -126,23 +136,19 @@ const Canvas = () => {
         context.setTransform(SCALE, 0, 0, SCALE, 0, 0);
         context.clearRect(0, 0, window.innerWidth, window.innerHeight);
 
-        //Обычная отрисовка на канвазе
-        context.fillStyle = "green"; //Shake
-        snake.forEach(([x, y]) => context.fillRect(x, y, 1, 1));
+        //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        // context.fillStyle = "green"; //Shake
+        // snake.forEach(([x, y]) => context.fillRect(x, y, 1, 1));
 
-        //Если змейкку сделать обхектом {x: 0, y: 0, color: ''}
-        // snake.forEach(fragment => (
-        //     return (
-        //         context.fillStyle = fragment.color;
-        //         context.fillRect(fragment.x, fragment.y, 1, 1);
-        //         )
-        // ))
+        //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ {x: 0, y: 0, color: ''}
+        context.fillStyle = 'green'
+        snake.forEach(fragment => context.fillRect(fragment.x, fragment.y, 1, 1))
 
         //If an apple is object {x: 0, y: 0}
         context.fillStyle = "red";//Food
-        context.fillRect(apple[0], apple[1], 1, 1);
+        context.fillRect(apple.x, apple.y, 1, 1);
 
-    }, [snake, apple, gameOver]);//И Вызывать этот эффект, когда будет изменяться какой-то из параметров
+    }, [snake, apple, gameOver]);//пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
     useInterval(() => gameLoop(), speed);
 
